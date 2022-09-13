@@ -49,23 +49,18 @@ class InputComponent extends React.Component {
 
     render() {
         return (
-            <Consumer>
-                {(value) => {
-                    return (
-                        <input
-                            onChange={this.firstFieldChange}
-                            value={value.mail}
-                            type="email"
-                            className="form-control"
-                            id="exampleFormControlInput1"
-                            placeholder="name@example.com"
-                        />
-                    );
-                }}
-            </Consumer>
+            <input
+                onChange={this.firstFieldChange}
+                value={this.contextType.mail}
+                type="email"
+                className="form-control"
+                id="exampleFormControlInput1"
+                placeholder="name@example.com"
+            />
         );
     }
 }
+InputComponent.contextType = dataContext;
 
 function App() {
     const [data, setData] = useState({

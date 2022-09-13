@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Container } from 'react-bootstrap';
+import { Container, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 const Form = (props) => {
+    const secondFieldChange = () => {};
     return (
         <Container>
             <form className="w-50 border mt-5 p-3 m-auto">
@@ -14,13 +15,7 @@ const Form = (props) => {
                     >
                         Email address
                     </label>
-                    <input
-                        value={props.mail}
-                        type="email"
-                        className="form-control"
-                        id="exampleFormControlInput1"
-                        placeholder="name@example.com"
-                    />
+                    <InputComponent mail={props.mail} />
                 </div>
                 <div className="mb-3">
                     <label
@@ -30,6 +25,7 @@ const Form = (props) => {
                         Example textarea
                     </label>
                     <textarea
+                        onChange={secondFieldChange}
                         value={props.text}
                         className="form-control"
                         id="exampleFormControlTextarea1"
@@ -41,6 +37,23 @@ const Form = (props) => {
     );
 };
 
+class InputComponent extends React.Component {
+    firstFieldChange = () => {};
+
+    render() {
+        return (
+            <input
+                onChange={this.firstFieldChange}
+                value={this.props.mail}
+                type="email"
+                className="form-control"
+                id="exampleFormControlInput1"
+                placeholder="name@example.com"
+            />
+        );
+    }
+}
+
 function App() {
     const [data, setData] = useState({
         mail: 'name@example.com',
@@ -50,7 +63,8 @@ function App() {
     return (
         <>
             <Form mail={data.mail} text={data.text} />
-            <button
+            <Button
+                variant="primary"
                 onClick={() =>
                     setData({
                         mail: 'second@example.com',
@@ -59,7 +73,7 @@ function App() {
                 }
             >
                 Click me
-            </button>
+            </Button>
         </>
     );
 }

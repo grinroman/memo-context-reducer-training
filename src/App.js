@@ -1,7 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, createContext } from 'react';
 import { Container, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+
+const dataContext = createContext({
+    mail: 'name@example.com',
+    text: 'some text',
+});
+
+const { Provider, Consumer } = dataContext;
 
 const Form = (props) => {
     const secondFieldChange = () => {};
@@ -15,7 +22,7 @@ const Form = (props) => {
                     >
                         Email address
                     </label>
-                    <InputComponent mail={props.mail} />
+                    <InputComponent />
                 </div>
                 <div className="mb-3">
                     <label
@@ -42,14 +49,20 @@ class InputComponent extends React.Component {
 
     render() {
         return (
-            <input
-                onChange={this.firstFieldChange}
-                value={this.props.mail}
-                type="email"
-                className="form-control"
-                id="exampleFormControlInput1"
-                placeholder="name@example.com"
-            />
+            <Consumer>
+                {(value) => {
+                    return (
+                        <input
+                            onChange={this.firstFieldChange}
+                            value={value.mail}
+                            type="email"
+                            className="form-control"
+                            id="exampleFormControlInput1"
+                            placeholder="name@example.com"
+                        />
+                    );
+                }}
+            </Consumer>
         );
     }
 }
@@ -61,8 +74,8 @@ function App() {
     });
 
     return (
-        <>
-            <Form mail={data.mail} text={data.text} />
+        <Provider value={data}>
+            <Form text={data.text} />
             <Button
                 variant="primary"
                 onClick={() =>
@@ -74,7 +87,7 @@ function App() {
             >
                 Click me
             </Button>
-        </>
+        </Provider>
     );
 }
 

@@ -46,7 +46,7 @@ const Form = (props) => {
 
 class InputComponent extends React.Component {
     firstFieldChange = () => {};
-
+    static contextType = dataContext;
     render() {
         return (
             <input
@@ -60,7 +60,6 @@ class InputComponent extends React.Component {
         );
     }
 }
-InputComponent.contextType = dataContext;
 
 function App() {
     const [data, setData] = useState({
